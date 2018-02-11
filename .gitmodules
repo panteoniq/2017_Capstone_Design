@@ -1,0 +1,3 @@
+[submodule "NFCWriter"]
+	path = NFCWriter
+	url = https://github.com/panteoniq/NFCWriter.git
