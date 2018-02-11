@@ -1,3 +1,6 @@
 [submodule "NFCWriter"]
 	path = NFCWriter
 	url = https://github.com/panteoniq/NFCWriter.git
+[submodule "application"]
+	path = application
+	url = https://github.com/hanseol/MovieNowProject
