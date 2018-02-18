@@ -1,0 +1,83 @@
+drop database moona;
+create database moona;
+use moona;
+
+
+CREATE TABLE `user` (
+  `id` varchar(10) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `signup_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user_token` text NOT NULL,
+  `recommend_on` tinyint(4) NOT NULL,
+  `isloggedin` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `preference_genre` (
+  `user_id` varchar(10) NOT NULL,
+  `SF` int(5) NOT NULL,
+  `crime` int(5) NOT NULL,
+  `action` int(5) NOT NULL,
+  `melo_romance` int(5) NOT NULL,
+  `drama` int(5) NOT NULL,
+  `comedy` int(5) NOT NULL,
+  `animation` int(5) NOT NULL,
+  `fantasy` int(5) NOT NULL,
+  `adventure` int(5) NOT NULL,
+  `thriller` int(5) NOT NULL,
+  `family` int(5) NOT NULL,
+  `documentary` int(5) NOT NULL,
+  `war` int(5) NOT NULL,
+  `mystery` int(5) NOT NULL,
+  `adult` int(5) NOT NULL,
+  `horror` int(5) NOT NULL,
+  `musical` int(5) NOT NULL,
+  `history` int(5) NOT NULL,
+  `etc` int(5) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `pre_gen_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `reserved_genre` (
+  `user_id` varchar(10) NOT NULL,
+  `SF` int(5) NOT NULL,
+  `crime` int(5) NOT NULL,
+  `action` int(5) NOT NULL,
+  `melo_romance` int(5) NOT NULL,
+  `drama` int(5) NOT NULL,
+  `comedy` int(5) NOT NULL,
+  `animation` int(5) NOT NULL,
+  `fantasy` int(5) NOT NULL,
+  `adventure` int(5) NOT NULL,
+  `thriller` int(5) NOT NULL,
+  `family` int(5) NOT NULL,
+  `documentary` int(5) NOT NULL,
+  `war` int(5) NOT NULL,
+  `mystery` int(5) NOT NULL,
+  `adult` int(5) NOT NULL,
+  `horror` int(5) NOT NULL,
+  `musical` int(5) NOT NULL,
+  `history` int(5) NOT NULL,
+  `etc` int(5) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `res_gen_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `recommend_list` (
+  `user_id` varchar(10) NOT NULL,
+  `movie_name` varchar(45) NOT NULL,
+  `recommend_day` int(2) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`user_id`,`movie_name`),
+  CONSTRAINT `rec_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `movie_list` (
+  `movie_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `movie_name` varchar(40) NOT NULL,
+  `movie_genre` varchar(20) NOT NULL,
+  `movie_en_genre` varchar(20) NOT NULL,
+  PRIMARY KEY (`movie_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
