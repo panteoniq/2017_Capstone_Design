@@ -1,4 +1,6 @@
-var cron=require('node-cron');
+//1. 매일 동일한 시간에 실행하기 위해서 원래는 node-cron 모듈을 사용했으나 에러 발생 시
+//스크립트 파일 자체가 종료되어 일일이 다시 실행해야 하는 번거로움이 있어 삭제하고 리눅스 기본 명령어인 crontab을 사용하였습니다
+
 var http = require( "http" );
 var mysql = require('mysql');
 
@@ -8,10 +10,21 @@ var connection;
 //날짜 계산
 function CalDate()
 {
+  var maxday=[31,28,31,30,31,30,31,31,30,31,30,31];
   var today = new Date();
-  var dd = today.getDate()-1;
+  var dd = today.getDate()-1; //하루 전 날짜
   var mm = today.getMonth()+1; //January is 0!
   var yyyy = today.getFullYear();
+
+  if (dd==0)//오늘이 1일이면 전 달 마지막 날짜로
+  {
+    if ((mm--)==0)//1월 1일이었을 경우에는 12월로 돌아가야 하니까
+    {
+       mm=12;
+    }
+    dd=maxday[mm];
+  }
+
   if(dd<10) {
       dd='0'+dd
   }
@@ -21,10 +34,10 @@ function CalDate()
   return yyyy+mm+dd;
 }
 
-
+//DB 연결
 function DBCon()
 {
-  connection = mysql.createConnection({ //MySQL 연결을 위한 정보
+  connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
     password : '133nplab',
@@ -234,7 +247,7 @@ function GetMovieGen()
                 }
                 else
                 {
-                  console.log('info', '영화 정보 저장이 완료되었습니다 : ' + new Date());
+                  console.log('영화 정보 저장이 완료되었습니다! : ' + new Date());
                 }
               });
           });
@@ -244,14 +257,12 @@ function GetMovieGen()
       });
     }
     setTimeout(DBClose, 3000);
-    //mysql에 저장
     console.log("");
 }
 
-console.log("영화 장르 자동 추출 중...");
-console.log("(Movie Genre is being Exracted...)")
-
-console.log("delete까지 완료");
+console.log("영화 장르 추출 시작...");
+DeleteMovieList();
+console.log("DB의 기존 데이터 삭제 완료");
 http.get(movieCodeUrl, function(res){
     var body = '';
     res.setEncoding('utf8');
@@ -266,8 +277,8 @@ http.get(movieCodeUrl, function(res){
           movieCodeArr[i]=parsed_data.boxOfficeResult.dailyBoxOfficeList[i].movieCd;
           console.log(movieCodeArr[i]);
         }
+        GetMovieGen();
     });
 }).on('error', function(e){
       console.log("Got an error: ", e);
 });
-setTimeout(GetMovieGen, 2000);//데이터가 다 들어가게 3초 자고 나서 실행.
