@@ -40,7 +40,7 @@ function DBCon()
   connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
-    password : '133nplab',
+    password : 'password',
     port     : 3306,
     database : 'moona'
   });
@@ -260,6 +260,9 @@ function GetMovieGen()
     console.log("");
 }
 
+DBCon();
+date=CalDate();
+movieCodeUrl='http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key='+key+'&targetDt=' + date;
 console.log("영화 장르 추출 시작...");
 DeleteMovieList();
 console.log("DB의 기존 데이터 삭제 완료");
