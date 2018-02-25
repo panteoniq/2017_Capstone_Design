@@ -204,19 +204,15 @@ class DBOperations {
     //사용자 삭제
     public function deleteUser($username)
     {
-      $logoutQuery="delete from user where id='".$username."'";
-
-      $logoutResult=$this->con->query($logoutQuery);
-      if ($logoutResult)
-      {
-        //정상 처리
+      $query=$this->con->prepare("delete from user where id=?");
+      $query->bind_param("s", $username);
+      $query->execute();
+      $query->store_result();
+      //echo 'affected_rows : '.$query->affected_rows;
+      if ($query->affected_rows>0)
         return 1;
-      }
       else
-      {
-        //에러 발생
         return 0;
-      }
     }
 
     //사용자의 선호 장르 검사
@@ -323,4 +319,5 @@ class DBOperations {
         return 2;
       }
     }
+  }
 ?>

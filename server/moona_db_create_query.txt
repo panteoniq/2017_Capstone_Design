@@ -35,6 +35,7 @@ CREATE TABLE `preference_genre` (
   `horror` int(5) NOT NULL,
   `musical` int(5) NOT NULL,
   `history` int(5) NOT NULL,
+  `western` int(5) NOT NULL,
   `etc` int(5) NOT NULL,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `pre_gen_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -61,6 +62,7 @@ CREATE TABLE `reserved_genre` (
   `horror` int(5) NOT NULL,
   `musical` int(5) NOT NULL,
   `history` int(5) NOT NULL,
+  `western` int(5) NOT NULL,
   `etc` int(5) NOT NULL,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `res_gen_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
