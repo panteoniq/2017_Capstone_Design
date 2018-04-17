@@ -5,7 +5,7 @@
 1. 상수(./includes/Constants.php)
 2. 데이터베이스 연결 정보(./includes/DBConnect.php)
 3. 데이터베이스 입출력 함수(./includes/DBOperations.php)
-4. 박스오피스 순위 수집 및 가공(./auto_get_genre.js)
+4. 박스오피스 순위 수집 및 가공(./auto_get_genre.js) (./auto_get_genre.php)
 5. 비밀번호 변경(./change_password.php)
 6. 선호 장르 변경(./change_pref.php)
 7. 비밀번호 확인(./check_password.php)
