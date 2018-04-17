@@ -111,7 +111,7 @@ function GetMovieGen()
                       MovieEnGenre : "action"
                     }
                   break;
-                case "어드벤쳐":
+                case "어드벤처":
                 movieGenObj[i] = {
                       MovieName : parsed_movieGen.movieInfoResult.movieInfo.movieNm,
                       MovieGenre : parsed_movieGen.movieInfoResult.movieInfo.genres[0].genreNm,
